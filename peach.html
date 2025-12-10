@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ask For Date</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    body {
+      padding: 2rem;
+      width: 100%;
+      min-height: 100vh;
+      background-image: url(assets/737e7ba2b374634a64c6f769aac1db14.jpg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-img {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      max-width: 600px;
+      margin-inline: auto;
+      filter: drop-shadow(5px 5px 20px rgba(0, 0, 0, 0.2));
+    }
+
+    .container {
+      flex: 1;
+      position: relative;
+      isolation: isolate;
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+    }
+
+    .image-1,
+    .image-2 {
+      position: absolute;
+      top: 34%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .image-1 {
+      width: 305px;
+    }
+
+    .image-2 {
+      width: 250px;
+    }
+
+    .btn {
+      position: absolute;
+      top: calc(100% - 5rem);
+      min-width: 120px;
+      padding: 0.75rem 1rem;
+      font-size: 1.25rem;
+      outline: none;
+      border: none;
+      background-color: #f8fafc;
+      border-radius: 5px;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #7c0f5c;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-yes {
+      left: 50%;
+      transform: translateX(calc(-100% - 1rem));
+      z-index: 1;
+      background-color: rgb(180, 82, 98);
+      color: rgb(0, 0, 0);
+    }
+
+    .btn-no {
+      left: calc(50% + 1rem);
+      transition: all 0.5s ease;
+      z-index: 2;
+      background-color: rgb(180, 82, 98);
+    }
+
+    #message {
+      text-align: center;
+      font-size: 40px;
+      color: #ad108698;
+      margin-top: 2rem;
+      font-weight: bold;
+      animation: pop 0.5s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <img src="assets/Add a heading.png" alt="date?" class="header-img" />
+  <p id="message" class="hide">YEEY! Can’t wait to see you this Saturday! PEACHHH!!!</p>
+
+  <div class="container" id="container">
+    <img src="assets/erm-fingers.gif" alt="please" class="image-1" />
+    <img src="assets/peach-and-goma-jumping.gif" alt="yes" class="image-2 hide" />
+    <button class="btn btn-yes">Yes</button>
+    <button class="btn btn-no">No</button>
+  </div>
+
+  <script>
+    const container = document.getElementById("container");
+    const imageOne = document.querySelector(".image-1");
+    const imageTwo = document.querySelector(".image-2");
+    const btnYes = document.querySelector(".btn-yes");
+    const btnNo = document.querySelector(".btn-no");
+    const message = document.getElementById("message");
+
+    let yesScale = 1;
+
+    function getRandomNumber(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // NO moves randomly and YES grows
+    btnNo.addEventListener("click", () => {
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = btnNo.getBoundingClientRect();
+
+      const maxTop = containerRect.height - btnRect.height;
+      const maxLeft = containerRect.width - btnRect.width;
+
+      btnNo.style.top = getRandomNumber(0, maxTop) + "px";
+      btnNo.style.left = getRandomNumber(0, maxLeft) + "px";
+
+      yesScale += 2.25;
+      btnYes.style.transform = `translateX(calc(-100% - 1rem)) scale(${yesScale})`;
+    });
+
+    // YES click: hide buttons and switch images
+    btnYes.addEventListener("click", () => {
+      btnYes.classList.add("hide");
+      btnNo.classList.add("hide");
+      imageOne.classList.add("hide");
+      imageTwo.classList.remove("hide");
+      message.classList.remove("hide");
+    });
+  </script>
+
+</body>
+</html>
